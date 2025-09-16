@@ -1,0 +1,35 @@
+/* Form wrapper */
+div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* full screen center */
+  background: linear-gradient(135deg, #e0f7fa, #ffffff);
+  gap: 15px;
+}
+
+/* Input fields */
+input {
+  width: 280px;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  font-size: 16px;
+  transition: 0.2s ease-in-out;
+}
+
+input:focus {
+  border-color: #0070f3; /* Next.js blue */
+  box-shadow: 0 0 5px rgba(0, 112, 243, 0.5);
+}
+
+/* Button from shadcn/ui already styled but add margin */
+button {
+  width: 300px;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
