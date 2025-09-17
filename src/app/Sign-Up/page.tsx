@@ -98,15 +98,15 @@ const SignUpPage = () => {
         {/* Social Login Buttons */}
         <div className="flex justify-center gap-4 w-full max-w-xs mt-4">
           {/* Google Button */}
-          <button className="flex items-center justify-center gap-2 flex-1 py-2 bg-white text-gray-800 border-2 border-green-500 rounded-md shadow 
-            hover:bg-transparent hover:text-white hover:border-green-500 transition">
+          <button className="flex items-center justify-center gap-2 flex-1 py-2 bg-transparent text-gray-200 border-1 border-green-500 rounded-md shadow 
+            hover:bg-gray-200 hover:text-black hover:border-green-500 transition cursor-pointer">
             <img src="/google.webp" alt="Google" className="w-5 h-5" />
             Google
           </button>
 
           {/* Facebook Button */}
-          <button className="flex items-center justify-center gap-2 flex-1 py-2 bg-sky-500 text-white border-2 border-green-500 rounded-md shadow
-            hover:bg-transparent hover:text-black hover:border-green-500 transition">
+          <button className="flex items-center justify-center gap-2 flex-1 py-2 bg-transparent-500 text-white border-1 border-green-500 rounded-md shadow
+            hover:bg-blue-500 hover:text-white hover:border-green-500 transition cursor-pointer">
             <img src="/face.webp" alt="Facebook" className="w-5 h-5" />
             Facebook
           </button>

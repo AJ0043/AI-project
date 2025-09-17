@@ -87,22 +87,7 @@ const SignInPage = () => {
           Welcome back! Sign in to access your dashboard and manage your projects efficiently.
         </p>
 
-        {/* Social Login Buttons */}
-        <div className="flex justify-center gap-4 w-full max-w-xs mt-4">
-          {/* Google Button */}
-          <button className="flex items-center justify-center gap-2 flex-1 py-2 bg-white text-gray-800 border-2 border-green-500 rounded-md shadow 
-            hover:bg-transparent hover:text-white hover:border-green-500 transition">
-            <img src="/google.webp" alt="Google" className="w-5 h-5" />
-            Google
-          </button>
-
-          {/* Facebook Button */}
-          <button className="flex items-center justify-center gap-2 flex-1 py-2 bg-sky-500 text-white border-2 border-green-500 rounded-md shadow
-            hover:bg-transparent hover:text-black hover:border-green-500 transition">
-            <img src="/face.webp" alt="Facebook" className="w-5 h-5" />
-            Facebook
-          </button>
-        </div>
+       
       </div>
     </div>
   );
