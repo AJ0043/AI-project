@@ -1,15 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation"; // 👈 router import
 import { authClient } from "@/lib/auth-clients";
 
 const SignInPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter(); // 👈 Next.js router
 
   // ✅ Login handler
   const onLogin = async (e: React.FormEvent) => {
-    e.preventDefault(); // prevent page reload
+    e.preventDefault();
     console.log("Login clicked", { email, password });
     try {
       const { error } = await authClient.signIn.email({ email, password });
@@ -19,6 +21,7 @@ const SignInPage = () => {
       } else {
         console.log("Login success");
         window.alert("✅ Logged In Successfully");
+        router.push("/logout"); // 👈 redirect after success
       }
     } catch (err: any) {
       console.error("Login exception:", err);
@@ -62,7 +65,7 @@ const SignInPage = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-green-600 text-white py-2 rounded-md font-semibold hover:bg-green-700 transition"
+              className="w-full bg-black text-white py-2 rounded-md font-semibold hover:bg-green-700 transition"
             >
               Sign In
             </button>
@@ -79,15 +82,13 @@ const SignInPage = () => {
       {/* Right: Image Section */}
       <div className="flex-1 bg-black flex flex-col items-center justify-center p-6">
         <img
-          src="/logo.svg"
+          src="/chat2.svg"
           alt="Sign In Illustration"
           className="max-w-xs w-full rounded-lg shadow-lg mb-4"
         />
         <p className="text-white text-center text-sm md:text-base max-w-xs mb-6">
           Welcome back! Sign in to access your dashboard and manage your projects efficiently.
         </p>
-
-       
       </div>
     </div>
   );
