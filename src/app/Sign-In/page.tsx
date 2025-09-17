@@ -35,11 +35,15 @@ const SignInPage = () => {
       <div className="flex flex-1 items-center justify-center bg-white p-8">
         <div className="w-full max-w-md">
           <h2
-            className="text-3xl mb-6 text-gray-800 font-bold"
-            style={{ fontFamily: "var(--font-inter)" }}
-          >
-            Sign In
-          </h2>
+  className="text-3xl mb-2 text-gray-800 font-bold"
+  style={{ fontFamily: "var(--font-inter)" }}
+>
+  Sign In
+</h2>
+<p className="text-sm text-gray-500 mb-6">
+  Welcome back! Please enter your details to continue.
+</p>
+
           <form className="space-y-4" onSubmit={onLogin}>
             <div>
               <label className="block text-sm font-medium text-gray-700">Email</label>

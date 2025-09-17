@@ -3,9 +3,6 @@
 import React, { useState } from "react";
 import { authClient } from "@/lib/auth-clients";
 
-// Example: Supabase client import
-// import { supabase } from "@/lib/supabaseClient"; // agar Supabase use kar rahe ho
-
 const SignUpPage = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -14,26 +11,8 @@ const SignUpPage = () => {
   const [message, setMessage] = useState<string>("");
   const [msgColor, setMsgColor] = useState<string>("");
 
-  const saveUserToDB = async (name: string, email: string) => {
-    try {
-      // === Supabase/PostgreSQL logic ===
-      // Example Supabase:
-      // const { data, error } = await supabase.from("users").insert([{ name, email }]);
-      // if (error) throw error;
-
-      // Temporary: Console log to simulate DB save
-      console.log("Saving to DB:", { name, email });
-
-      return { success: true, message: `✅ User ${name} saved successfully`, color: "green" };
-    } catch (err) {
-      console.error(err);
-      return { success: false, message: `❌ Failed to save user`, color: "red" };
-    }
-  };
-
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (password !== confirmPassword) {
       setMessage("❌ Password and Confirm Password do not match");
       setMsgColor("red");
@@ -41,22 +20,29 @@ const SignUpPage = () => {
     }
 
     try {
-      // 1️⃣ Auth signup
       const { error } = await authClient.signUp.email({ email, password, name });
       if (error) {
         setMessage(`❌ Signup Failed: ${error.message}`);
         setMsgColor("red");
         return;
       }
+      setMessage("✅ Signup successful!");
+      setMsgColor("green");
+    } catch (err: any) {
+      setMessage(`❌ Signup Exception: ${err.message}`);
+      setMsgColor("red");
+    }
+  };
 
-      // 2️⃣ Save to DB directly
-      const dbResponse = await saveUserToDB(name, email);
-      setMessage(dbResponse.message);
-      setMsgColor(dbResponse.color);
-
-    } catch (err: unknown) {
-      const errorMsg = err instanceof Error ? err.message : String(err);
-      setMessage(`❌ Signup Exception: ${errorMsg}`);
+  // ✅ Google Auth Handler
+  const handleGoogleSignIn = async () => {
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+      });
+    } catch (err) {
+      console.error("Google login error:", err);
+      setMessage("❌ Google login failed");
       setMsgColor("red");
     }
   };
@@ -66,15 +52,27 @@ const SignUpPage = () => {
       {/* Left: Form Section */}
       <div className="flex flex-1 items-center justify-center bg-white p-8">
         <div className="w-full max-w-md">
-          <h2 className="text-3xl font-bold mb-6 text-gray-800">Sign Up</h2>
+          <h2 className="text-3xl font-bold mb-6 text-gray-800">
+            Create Your Account
+          </h2>
+          <p className="text-gray-600 mb-6">
+            Join us today and start managing your projects with ease 🚀
+          </p>
+
           {message && (
-            <p className={`mb-4 text-center font-semibold ${msgColor === "red" ? "text-red-600" : "text-green-600"}`}>
+            <p
+              className={`mb-4 text-center font-semibold ${
+                msgColor === "red" ? "text-red-600" : "text-green-600"
+              }`}
+            >
               {message}
             </p>
           )}
           <form className="space-y-4" onSubmit={onSubmit}>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Full Name</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Full Name
+              </label>
               <input
                 type="text"
                 value={name}
@@ -86,7 +84,9 @@ const SignUpPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Email</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Email
+              </label>
               <input
                 type="email"
                 value={email}
@@ -98,7 +98,9 @@ const SignUpPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Password</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Password
+              </label>
               <input
                 type="password"
                 value={password}
@@ -110,7 +112,9 @@ const SignUpPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Confirm Password
+              </label>
               <input
                 type="password"
                 value={confirmPassword}
@@ -131,7 +135,9 @@ const SignUpPage = () => {
 
           <p className="mt-4 text-sm text-gray-600">
             Already have an account?{" "}
-            <a href="/Sign-In" className="text-green-600 hover:underline">Sign In</a>
+            <a href="/Sign-In" className="text-green-600 hover:underline">
+              Sign In
+            </a>
           </p>
         </div>
       </div>
@@ -144,19 +150,28 @@ const SignUpPage = () => {
           className="max-w-xs w-full rounded-lg shadow-lg mb-10"
         />
         <p className="text-white text-center text-sm md:text-base max-w-xs mb-6">
-          Join us today! Sign up to start managing your projects and boost productivity.
+          Join us today! Sign up to start managing your projects and boost
+          productivity.
         </p>
 
         {/* Social Login Buttons */}
         <div className="flex justify-center gap-4 w-full max-w-xs mt-4">
-          <button className="flex items-center justify-center gap-2 flex-1 py-2 bg-transparent text-gray-200 border border-green-500 rounded-md shadow hover:bg-gray-200 hover:text-black transition cursor-pointer">
-            <img src="/google.webp" alt="Google" className="w-5 h-5" />
-            Google
+          {/* ✅ Google Button */}
+          <button
+            onClick={handleGoogleSignIn}
+            className="flex items-center justify-center gap-1 flex-1 px-1 py-1 bg-transparent text-gray-200 border border-green-500 rounded-md shadow hover:bg-gray-200 hover:text-black transition cursor-pointer"
+          >
+            <img src="/google.webp" alt="Google" className="w-10 h-10" />
+            Google  
           </button>
 
-          <button className="flex items-center justify-center gap-2 flex-1 py-2 bg-transparent text-white border border-green-500 rounded-md shadow hover:bg-blue-500 hover:text-white transition cursor-pointer">
-            <img src="/face.webp" alt="Facebook" className="w-5 h-5" />
-            Facebook
+          {/* ⚠️ Facebook - dummy for now */}
+        <button
+            disabled
+            className="flex items-center justify-center gap-1 flex-1 px-1 py-1 bg--400 text-white border border-green-500 rounded-md shadow cursor-not-allowed"
+              >
+          <img src="/mac.png" alt="Meta" className="w-10 h-10" />
+          Macbook
           </button>
         </div>
       </div>
