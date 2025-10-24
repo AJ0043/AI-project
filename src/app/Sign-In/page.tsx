@@ -93,6 +93,12 @@ const SignInPage = () => {
         <p className="text-white text-center text-sm md:text-base max-w-xs mb-6">
           Welcome back! Sign in to access your dashboard and manage your projects efficiently.
         </p>
+      
+      
+      
+      
+      
+      
       </div>
     </div>
   );

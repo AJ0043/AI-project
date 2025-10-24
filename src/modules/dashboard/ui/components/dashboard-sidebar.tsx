@@ -1,50 +1,78 @@
-// Dashboard.jsx
-import React from "react";
+"use client";
+
+import { BotIcon, VideoIcon, StarIcon } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 import {
-  FiVideo,
-  FiUsers,
-  FiCpu,
-  FiCalendar,
-} from "react-icons/fi"; // Icons for video, agents, AI, meeting
+  Sidebar,
+  SidebarHeader,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarFooter,
+} from "@/components/ui/sidebar";
 
-const Dashboard = () => {
-  const menuItems = [
-    { name: "Meeting", icon: <FiCalendar size={20} /> },
-    { name: "Video", icon: <FiVideo size={20} /> },
-    { name: "Agents", icon: <FiUsers size={20} /> },
-    { name: "AI Bot", icon: <FiCpu size={20} /> },
-  ];
+const firstSection = [
+  { icon: VideoIcon, label: "Meetings", href: "/meetings" },
+  { icon: BotIcon, label: "Agents", href: "/agents" },
+];
 
+const secondSection = [
+  { icon: StarIcon, label: "Upgrade", href: "/upgrade" },
+];
+
+export const DashboardSidebar = () => {
   return (
-    <div className="flex h-screen">
-      {/* Sidebar */}
-      <div className="w-64 bg-gray-900 text-white flex flex-col">
-        {/* Logo */}
-        <div className="flex items-center justify-center h-20 border-b border-gray-700">
-          <img src="/Chat2.png" alt="Logo" className="h-12 w-auto" />
-        </div>
+    <Sidebar>
+      <SidebarHeader>
+        <Link href="/" className="flex items-center space-x-2 px-2 pt-2">
+          <Image src="/chat.svg" height={36} width={36} alt="chat.ai" />
+          <p className="text-2xl font-semibold text-white">Chat.ai</p>
+        </Link>
+      </SidebarHeader>
 
-        {/* Menu */}
-        <div className="flex-1 mt-4">
-          {menuItems.map((item, index) => (
-            <button
-              key={index}
-              className="flex items-center gap-3 w-full px-4 py-3 hover:bg-gray-700 transition-colors"
-            >
-              {item.icon}
-              <span>{item.name}</span>
-            </button>
-          ))}
-        </div>
-      </div>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {firstSection.map((item) => (
+                <SidebarMenuItem key={item.href}>
+                  <SidebarMenuButton asChild>
+                    <Link href={item.href} className="flex items-center gap-2">
+                      <item.icon className="w-5 h-5" />
+                      <span>{item.label}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
 
-      {/* Main content */}
-      <div className="flex-1 bg-gray-100 p-6">
-        <h1 className="text-2xl font-bold mb-4">Dashboard Content</h1>
-        {/* Here you can add your main dashboard components */}
-      </div>
-    </div>
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {secondSection.map((item) => (
+                <SidebarMenuItem key={item.href}>
+                  <SidebarMenuButton asChild>
+                    <Link href={item.href} className="flex items-center gap-2">
+                      <item.icon className="w-5 h-5" />
+                      <span>{item.label}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+
+      <SidebarFooter>
+        <p className="text-xs text-gray-400 px-2">© 2025 Chat.ai</p>
+      </SidebarFooter>
+    </Sidebar>
   );
 };
-
-export default Dashboard;
